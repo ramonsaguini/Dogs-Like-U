@@ -1,29 +1,13 @@
 function getLocation() {
-  // Check if the browser supports geolocation
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
+  const imgResult = document.querySelector('.imgResult');
+  const apiUrl = 'https://dog.ceo/api/breeds/image/random';
 
-      displayLocation(latitude, longitude);
-    }, function (error) {
-      console.error('Error getting location:', error);
-      displayError('Error getting location. Please try again.');
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      imgResult.src = data.message;
+    })
+    .catch(error => {
+      console.error('Error fetching dog image:', error);
     });
-  } else {
-    displayError('Geolocation is not supported by your browser.');
-  }
-}
-
-function displayLocation(latitude, longitude) {
-  const locationResult = document.getElementById('locationResult');
-  locationResult.innerHTML = `
-    <p>Latitude: ${latitude}</p>
-    <p>Longitude: ${longitude}</p>
-  `;
-}
-
-function displayError(message) {
-  const locationResult = document.getElementById('locationResult');
-  locationResult.innerHTML = `<p>${message}</p>`;
 }
