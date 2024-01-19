@@ -1,8 +1,8 @@
-# DoggoMatcher App
+# Dogs Like U
 
 ## Overview
 
-Welcome to DoggoMatcher, a fun and delightful app that combines name guessing with adorable dog photos and entertaining videos. Discover the dog that matches the name you enter, enjoy a collection of cute dog images, and watch entertaining videos of various dog breeds.
+Welcome to Dogs Like U, a fun and delightful app that combines name guessing with adorable dog photos and entertaining videos. Discover the dog that matches the name you enter, enjoy a collection of cute dog images, and watch entertaining videos of various dog breeds.
 
 ## How It Works
 
