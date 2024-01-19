@@ -11,8 +11,6 @@ function getDog() {
 
       const dogName = extractDogName(data[0].breeds);
       imgResult.src = data[0].url;
-      imgResult.style.width = '300px';
-      imgResult.style.height = '250px';
 
       const apiUrlYoutube = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${dogName}dog&maxResults=1&key=${apiKeyYoutube}`;
 
@@ -23,7 +21,7 @@ function getDog() {
 
       if (data.items.length > 0) {
         const videoId = data.items[0].id.videoId;
-        videoResult.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+        videoResult.innerHTML = `<iframe width="100%" style='min-height: 500px;max-height: 700px;' src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
       } else {
         console.error('No YouTube video found for the dog breed.');
       }
