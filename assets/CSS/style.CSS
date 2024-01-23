@@ -65,3 +65,9 @@ footer {
   display: flex;
   flex-wrap: wrap;
 }
+
+.dogBreed{
+  text-align: center;
+  background-color: aquamarine;
+  border-radius: 50px;
+}
