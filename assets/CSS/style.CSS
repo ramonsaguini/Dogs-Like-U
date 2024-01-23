@@ -19,6 +19,13 @@ footer {
   justify-content: center;
 }
 
+p {
+  margin: 30px;
+  font-family: sans-serif;
+  color: #1e0a3c;
+  text-align: justify;
+  font-size: 20px;
+}
 .container-contact img {
   width: 50px;
   margin-left: 10px;
@@ -66,7 +73,7 @@ footer {
   flex-wrap: wrap;
 }
 
-.dogBreed{
+.dogBreed {
   text-align: center;
   background-color: aquamarine;
   border-radius: 50px;
