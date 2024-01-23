@@ -48,8 +48,12 @@ p {
 
 .contact p {
   font-size: 18px;
+  color: #fff;
 }
 
+.invert {
+  filter: invert(100%);
+}
 .contact-icons a {
   text-decoration: none;
 }
