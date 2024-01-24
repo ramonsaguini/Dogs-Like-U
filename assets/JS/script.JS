@@ -11,7 +11,7 @@ function getDog() {
   const apiKeyYoutube = 'AIzaSyASeziY62j7oLZgUeVw0z0avF7p2GCr1rM';
 
   // API URL for fetching dog images
-  const apiUrlDog = `https://api.thedogapi.com/v1/images/search?limit=10&api_key=${apiKeyDog}`;
+  const apiUrlDog = `https://api.thedogapi.com/v1/images/search?limit=1&api_key=${apiKeyDog}`;
   let dogName; // Variable to store the extracted dog name
   const nInput = document.getElementById('name-input').value;
   const sInput = document.getElementById('surname-input').value;
@@ -41,6 +41,12 @@ function getDog() {
     })
     .then(response => response.json())
     .then(data => {
+
+      if(data.error) {
+        console.error('YouTube Video API call error:', data.error);
+        alert(`Error on calling YouTube Video API`);
+      }
+
       // Checking if there are videos available for the dog breed on YouTube
       if (data.items.length > 0) {
         // Extracting video ID and embedding the YouTube video
