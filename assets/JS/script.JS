@@ -88,29 +88,43 @@ function getDog() {
   // Recursively try fetching until a valid breed is obtained
   tryFetchingUntilValidBreed()
     .then(validDogName => {
-      // ... (existing code)
+      // API URL for fetching YouTube videos related to the dog breed
+      const apiUrlYoutube = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${validDogName}dog&maxResults=1&key=${apiKeyYoutube}`;
 
-      // Creating a list item to display dog history
-      const listItem = document.createElement('li');
-      listItem.textContent = `${nameInput} ${surnameInput} - Breed: ${dogName}`;
+      // Fetching YouTube videos
+      return fetch(apiUrlYoutube);
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Checking if there are videos available for the dog breed on YouTube
+      if (data.items.length > 0) {
+        // Extracting video ID and embedding the YouTube video
+        const videoId = data.items[0].id.videoId;
+        videoResult.innerHTML = `<iframe width="100%" style='min-height: 500px;max-height: 700px;' src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
 
-      // Inserting the new item at the beginning of the dog history array
-      dogHistory.unshift({ name: nameInput, surname: surnameInput, breed: dogName });
+        // Creating a list item to display dog history
+        const listItem = document.createElement('li');
+        listItem.textContent = `${nameInput} ${surnameInput} - Breed: ${dogName}`;
 
-      // Trim the history to keep only the last 10 items
-      dogHistory = dogHistory.slice(0, 10);
+        // Inserting the new item at the beginning of the dog history array
+        dogHistory.unshift({ name: nameInput, surname: surnameInput, breed: dogName });
 
-      // Save the updated dog history to local storage
-      localStorage.setItem('dogHistory', JSON.stringify(dogHistory));
+        // Trim the history to keep only the last 10 items
+        dogHistory = dogHistory.slice(0, 10);
 
-      // Displaying the dog name in the heading
-      h2DogName.textContent = `${nameInput} ${surnameInput} - The Famous ${dogName}`;
+        // Save the updated dog history to local storage
+        localStorage.setItem('dogHistory', JSON.stringify(dogHistory));
 
-      // Dynamically add the new history item to the existing list
-      const lastResultList = document.querySelector('.lastResult');
-      const newItem = document.createElement('li');
-      newItem.textContent = `${nameInput} ${surnameInput} - Breed: ${dogName}`;
-      lastResultList.insertBefore(newItem, lastResultList.firstChild);
+        // Displaying the dog name in the heading
+        h2DogName.textContent = `${nameInput} ${surnameInput} - The Famous ${dogName}`;
+
+        // Update the history with the latest result
+        loadDogHistory();
+
+      } else {
+        // Logging an error if no YouTube video is found
+        console.error('No YouTube video found for the dog breed.');
+      }
     })
     .catch(error => {
       // Handle errors here
@@ -120,9 +134,9 @@ function getDog() {
   // Clearing input values
   document.getElementById('name-input').value = '';
   document.getElementById('surname-input').value = '';
+
 }
 
-// Function to load dog history from local storage and display in the lastResultList
 function loadDogHistory() {
   const storedHistory = localStorage.getItem('dogHistory');
   if (storedHistory) {
@@ -131,13 +145,14 @@ function loadDogHistory() {
     // Selecting the lastResultList element
     const lastResultList = document.querySelector('.lastResult');
 
-    // Clear the existing content in lastResultList
+    // Clearing the existing content in lastResultList
     lastResultList.innerHTML = '';
 
-    // Extract the last 10 items from dogHistory
-    const last10Items = dogHistory.slice(-10); // Reverse the order to show the newest first
+    // If there are more than 10 records, display only the last 10
+    const startIndex = Math.max(dogHistory.length - 10, 0);
+    const last10Items = dogHistory.slice(startIndex);
 
-    // Iterate through the sorted last 10 items and append them to lastResultList
+    // Iterate through the last 10 items and add them to lastResultList
     last10Items.forEach(dogRecord => {
       const listItem = document.createElement('li');
       listItem.textContent = `${dogRecord.name} ${dogRecord.surname} - Breed: ${dogRecord.breed}`;
